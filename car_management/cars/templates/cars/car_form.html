@@ -1,0 +1,18 @@
+{% extends 'cars/base.html' %}
+{% block title %}{% if car %}Изменить машинку{% else %}Создать машинку{% endif %}{% endblock %}
+{% block content %}
+<h1>{% if car %}Изменить машинку{% else %}Создать машинку{% endif %}</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class = 'form-group mb-3 d-flex flex-column'>
+      <p>{{field.label}}</p>
+      {{field}}
+    </div>
+  {%endfor%}
+    <button type="submit">{% if car %}Изменить{% else %}Добавить{% endif %}</button>
+</form>
+
+<a href="{% url 'car_list' %}">Назад к машинкам</a>
+{% endblock %}

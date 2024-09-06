@@ -1,0 +1,24 @@
+{% extends 'cars/base.html' %}
+
+{% block content %}
+  <h1>{{ car.make }} {{ car.model }} ({{ car.year }})</h1>
+  <p>{{ car.description }}</p>
+
+  <h2>Comments</h2>
+  <ul>
+    {% for comment in car.comments.all %}
+      <li>{{ comment.user.username }}: {{ comment.content }} ({{ comment.created_at }})</li>
+    {% endfor %}
+  </ul>
+
+  {% if user.is_authenticated %}
+    <h3>Add a Comment:</h3>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
+  {% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to add a comment.</p>
+  {% endif %}
+{% endblock %}
